@@ -1,0 +1,39 @@
+* Chronology
+- Should build data backwards, starting with 64th. Should do 65th in Summer 2024, once its over. 
+* Data requirements
+- Full list of standing committees 
+- Start of Legislatura committee assignments, presidencias, secretarías
+- Day-by-day committee reassignments.
+- Chamber membership, 500 x 2 plus extras
+- Licencias, dates.
+- Party switchers, dates.
+- List of contentious bills, presidential priorities, etc.
+- Scrape diario de sesiones appendices, source.
+* Legislaturas
+57 1997-00 ezp
+58 2000-03 fox
+59 2003-06 fox
+60 2006-09 fch
+61 2009-12 fch
+62 2012-15 epn
+63 2015-18 epn
+64 2018-21 amlo
+65 2021-24 amlo
+* mail to jeff 9oct2023
+Hi Jeff, sorry for the delay, I was cleaning messy census data. 
+
+Here is one attempt to code committee makeup and longitudinal changes. The info is exclusively from diario de los debates for the first quarter of the 60th, Oct-Dec 2006 (with a few unsystematic subsequent movements, ignore those). 
+
+Each row in the spreadsheet records a member's alta/baja from a committee. Sorting data by committee/ymd lists the original committee makeup, followed by posterior changes. 
+
+Column names are more or less self-explanatory. "n" tries to identify committee slots, if done correctly this should identify who vacates a seat and who the replacement is, and when the replacement arrives.
+
+A promotion to secretario appears as one integrante-baja and one secretario-alta for the same member. Not sure this works, please take a look.
+
+"Due" attempts to code the number of seats allocated to each party in the committee by jucopo, and later adjustments. The problem is that parties sometimes had more members than the explicit jucopo agreement in my small sample (check economia and hacienda committee expansions 6Dec2006, PRI seems to exceed quota by one member).
+
+Let me know what you think, we can add more info once we figure out a coding scheme.
+
+Saludos from Ensenada.
+
+-e

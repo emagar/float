@@ -1,0 +1,46 @@
+Hi Eric,
+
+In my years of recording the Congress, I have seen three types of committee reassignments:
+
+1. ​Suplentes replacing their propietarios on the same committees, and vice versa, when the propietario reicorporates. I have noticed that often the suplentes even enter the prestige committees. This is likely most often to happen when the propietario is expected to return, so the coordinator tries to avoid chains of promotions and demotions of the next best eligible deputies. This can be tested when we expect or know that the licencia will be long or permanent. Over the last 25 years, this has been by far the most common reason for reassignments.
+
+2. Leviathan reassignments. These are when a coordinator promotes or demotes legislators for reasons of loyalty or discipline. I see now and then promotions of whom I believed to that time to be active and responsible legislators to what I consider to be prestige committees. I have noticed only a handful of demotions that might have had Leviathan causes. We have discussed this before in our offices.
+
+3. Floater reassignments. These are temporary assignments, between a couple of days to a couple of weeks, presumably for the purpose of giving Morena the full complement of their seats on a committee: to assure majorities for internal votes and for signing dictamenes. This would only be necessary if the bills are controversial and could have active opposition (this can be measured by the committee votes, which we do have these days, and by the floor votes; this may not be testable when Morena is trying to block legislation that never goes to dictamen or vote). Remember that the dictamen must be signed by an absolute majority of the committee. This practice would only be important if Morena has lots of vacant seats on committees (they do). 
+These reassignments seem to have become huge in the 65th Legislature, by far most often by Morena. I have checked morenista deputies with high temporary reassignments in the 65th with their own committee movements in the 64th, and it seems that they had stable assignments or sometimes a Leviathan reassignment in the previous legislature. Or maybe the 64th data in the SIL is bad.
+
+I am sending a bunch of screenshots from the SIL. This is just a sampling from the beginning of the alphabet. I excluded morenistas who do not float. I am guessing that it was between 40 and 50 percent of the party who remained stable. It should not be difficult to determine what characteristics might lead someone to get floater status. I also did spot checks of PAN and PRI, and I found nothing like floaters (I do seem to remember some floating to committees for the electoral reform, but have not confirmed). 
+
+My next move, which I will try now, is to take some of the hyper floaters, and check to see if there were dictamenes from those committees while they were stationed there. I can get this from convacatorias (which may have an incomplete orden del dia), or from actas (which often come in very late, if ever), or from actual dictamenes that had primera lectura on the floor at some later point, then back-date to the day of the meeting or the signing (which is complicated). 
+
+Caveat with the SIL data: I am assuming that if a deputy was assigned to Vivienda in Oct 2021 (when the original assignment was made, most on 5-oct) and they are on the committee today (for which the ending date is automatically 31-jul-24), this does NOT mean that they stayed on the committee the whole time. Rather, I see evidence from other sources (forthcoming) that they may move off Vivienda to DH and back (to keep under the 3-committee max), under the assumption that DH has business and Vivienda does not. The floater cases listed in SIL are pretty obvious.
+
+Another caveat with SIL: I have no idea how accurate it is. More in next email.
+
+I am also including the Oct 1 2023 CDH roster (just to chose one), so that you can see the vacancies. My quick impression is that there are more vacancies on average when Morena chairs the committee than when the oppo chairs the committee. If so, obvious why.
+
+Committees: https://web.diputados.gob.mx/inicio/comisiones?Tipo=Ordinarias
+
+Chose the committee, click on integrantes, then on vista en lista. 
+
+Jeff
+
+----------------------------
+
+oct 1 2023
+Eric,
+
+These are the official movement authorizations, which give complete information. These are only from April 2023. Almost every session day there is a line item of committee reassignments. You can get a picture of some that are type 1 and most which are type 3. 
+
+This data is a lot harder to work with. We would need a database to record the full complement of every committee on any particular day, linked to data on the committee assignments of any individual member on any particular day. 
+
+If the floater data from SIL is correct (verified by this type of data), then we can probably use that for now, which would be faster to collect. The above data should also verify my idea that if someone has an original committee, and floats off and back on, then SIL records it as not having changes. 
+
+Juan has scraped all of the data on deputies from SIL (all legislatures covered by SIL). I doubt he has considered these floater assignments.
+
+Let me know what you think! I cannot imagine that this is common, maybe Will or John would know a bit more about practices elsewhere. Not even sure if other legislatures record changes as well as Mexico. But I think this is a doable research note at least on how Morena finds ways to fill up seats. It tends to suggest that Morena overreps itself on committees or underfills the seats, or both.
+
+Jeff
+
+
+
