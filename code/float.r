@@ -13,7 +13,7 @@ cm <- read.csv(paste0(dd,"64comm.csv"))
 dp <- read.csv(paste0(dd,"licencias/","dip64.csv"))
 ##
 ## retain finished comms only
-sel.r <- grep("frontera norte|frontera sur|asuntos migratorios|economia comercio|pesca|presupuesto", cm$committee)
+sel.r <- grep("frontera norte|frontera sur|asuntos migratorios|comunicaciones y transportes|economia comercio|pesca|presupuesto", cm$committee)
 cm <- cm[sel.r,]
 ##
 ## numeric n
@@ -53,277 +53,332 @@ rm(tmp1,tmp2,tmp3)
 ## empty vector to replicate
 tmp.t <- rep(NA, times=nrow(t))
 
-## ####################
-## ## frontera norte ##
-## ####################
-## tmp.work <- "asuntos frontera norte"
-## table(unique(cm$n[grep(tmp.work, cm$committee)]))
-## ##
-## names <- unique(cm$seats[cm$committee==tmp.work])
-## t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
-## colnames(t2) <- names
-## t2 <- cbind(t, t2)
-## ## subset comm data
-## cm.s <- cm[cm$committee==tmp.work,]
-## ##
-## for (i in 3:ncol(t2)){
-##     #i <- 3 # debug
-##     sel.r <- which(cm.s$seats %in% colnames(t2)[i])
-##     fch1 <- ymd("20180901")
-##     for (j in 1:length(sel.r)){
-##         #j <- 1 # debug
-##         fch2 <- cm.s$fch[sel.r[j]]
-##         if (cm.s$out.id[sel.r[j]]=="start") {
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
-##         } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
-##             in1 <- cm.s$out.id[sel.r[j]]
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
-##         } else {
-##             in1 <- cm.s$out.id[sel.r[j]]
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
-##         }
-##         fch1 <- fch2 ## prep next loop
-##     }
-## }
-## ##
-## ## add junta totals
-## t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
-## for (i in 1:ncol(t3)){
-##     t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
-## }
-## t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
-## t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
-## t2[is.na(t2)] <- 0
-## ##
-## ## ## keep session days only
-## ## t2 <- t2[which(t2$fch %in% session.days),]
-## ## duplicate with names instead of ids
-## t2.n <- t2
-## for (i in 1:ncol(t2.n)){
-##     t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
-## }
-## ##
-## ## export
-## write.csv(t2  [,-1], file = paste0(dd, "com-by-com/norte64ids.csv"), row.names=FALSE)
-## write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/norte64nom.csv"), row.names=FALSE)
-## 
-## 
-## ##################
-## ## frontera sur ##
-## ##################
-## tmp.work <- "asuntos frontera sur"
-## table(unique(cm$n[grep(tmp.work, cm$committee)]))
-## ##
-## names <- unique(cm$seats[cm$committee==tmp.work])
-## t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
-## colnames(t2) <- names
-## t2 <- cbind(t, t2)
-## ## subset comm data
-## cm.s <- cm[cm$committee==tmp.work,]
-## ##
-## for (i in 3:ncol(t2)){
-##     #i <- 3 # debug
-##     sel.r <- which(cm.s$seats %in% colnames(t2)[i])
-##     fch1 <- ymd("20180901")
-##     for (j in 1:length(sel.r)){
-##         #j <- 1 # debug
-##         fch2 <- cm.s$fch[sel.r[j]]
-##         if (cm.s$out.id[sel.r[j]]=="start") {
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
-##         } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
-##             in1 <- cm.s$out.id[sel.r[j]]
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
-##         } else {
-##             in1 <- cm.s$out.id[sel.r[j]]
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
-##         }
-##         fch1 <- fch2 ## prep next loop
-##     }
-## }
-## ## add junta totals
-## t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
-## for (i in 1:ncol(t3)){
-##     t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
-## }
-## t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
-## t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
-## t2[is.na(t2)] <- 0
-## ##
-## ## ## keep session days only
-## ## t2 <- t2[which(t2$fch %in% session.days),]
-## ## duplicate with names instead of ids
-## t2.n <- t2
-## for (i in 1:ncol(t2.n)){
-##     t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
-## }
-## ##
-## ##
-## ## export
-## write.csv(t2  [,-1], file = paste0(dd, "com-by-com/sur64ids.csv"), row.names=FALSE)
-## write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/sur64nom.csv"), row.names=FALSE)
-## 
-## ###############
-## ## migración ##
-## ###############
-## tmp.work <- "asuntos migratorios"
-## table(unique(cm$n[grep(tmp.work, cm$committee)]))
-## ##
-## names <- unique(cm$seats[cm$committee==tmp.work])
-## t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
-## colnames(t2) <- names
-## t2 <- cbind(t, t2)
-## ## subset comm data
-## cm.s <- cm[cm$committee==tmp.work,]
-## ##
-## for (i in 3:ncol(t2)){
-##     #i <- 3 # debug
-##     sel.r <- which(cm.s$seats %in% colnames(t2)[i])
-##     fch1 <- ymd("20180901")
-##     for (j in 1:length(sel.r)){
-##         #j <- 1 # debug
-##         fch2 <- cm.s$fch[sel.r[j]]
-##         if (cm.s$out.id[sel.r[j]]=="start") {
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
-##         } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
-##             in1 <- cm.s$out.id[sel.r[j]]
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
-##         } else {
-##             in1 <- cm.s$out.id[sel.r[j]]
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
-##         }
-##         fch1 <- fch2 ## prep next loop
-##     }
-## }
-## ## add junta totals
-## t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
-## for (i in 1:ncol(t3)){
-##     t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
-## }
-## t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
-## t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
-## t2[is.na(t2)] <- 0
-## ##
-## ## ## keep session days only
-## ## t2 <- t2[which(t2$fch %in% session.days),]
-## ## duplicate with names instead of ids
-## t2.n <- t2
-## for (i in 1:ncol(t2.n)){
-##     t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
-## }
-## ##
-## ##
-## ## export
-## write.csv(t2  [,-1], file = paste0(dd, "com-by-com/migracion64ids.csv"), row.names=FALSE)
-## write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/migracion64nom.csv"), row.names=FALSE)
-## 
-## #######################
-## ## economia comercio ##
-## #######################
-## tmp.work <- "economia comercio y competitividad"
-## table(unique(cm$n[grep(tmp.work, cm$committee)]))
-## ##
-## names <- unique(cm$seats[cm$committee==tmp.work])
-## t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
-## colnames(t2) <- names
-## t2 <- cbind(t, t2)
-## ## subset comm data
-## cm.s <- cm[cm$committee==tmp.work,]
-## ##
-## for (i in 3:ncol(t2)){
-##     #i <- 3 # debug
-##     sel.r <- which(cm.s$seats %in% colnames(t2)[i])
-##     fch1 <- ymd("20180901")
-##     for (j in 1:length(sel.r)){
-##         #j <- 1 # debug
-##         fch2 <- cm.s$fch[sel.r[j]]
-##         if (cm.s$out.id[sel.r[j]]=="start") {
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
-##         } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
-##             in1 <- cm.s$out.id[sel.r[j]]
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
-##         } else {
-##             in1 <- cm.s$out.id[sel.r[j]]
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
-##         }
-##         fch1 <- fch2 ## prep next loop
-##     }
-## }
-## ##
-## ## add junta totals
-## t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
-## for (i in 1:ncol(t3)){
-##     t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
-## }
-## t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
-## t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
-## t2[is.na(t2)] <- 0
-## ##
-## ## ## keep session days only
-## ## t2 <- t2[which(t2$fch %in% session.days),]
-## ## duplicate with names instead of ids
-## t2.n <- t2
-## for (i in 1:ncol(t2.n)){
-##     t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
-## }
-## ##
-## ## export
-## write.csv(t2  [,-1], file = paste0(dd, "com-by-com/ecocom64ids.csv"), row.names=FALSE)
-## write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/ecocom64nom.csv"), row.names=FALSE)
-## 
-## ###########
-## ## pesca ##
-## ###########
-## tmp.work <- "pesca"
-## table(unique(cm$n[grep(tmp.work, cm$committee)]))
-## ##
-## names <- unique(cm$seats[cm$committee==tmp.work])
-## t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
-## colnames(t2) <- names
-## t2 <- cbind(t, t2)
-## ## subset comm data
-## cm.s <- cm[cm$committee==tmp.work,]
-## cm.s[1,]
-## ##
-## for (i in 3:ncol(t2)){
-##     #i <- 3 # debug
-##     sel.r <- which(cm.s$seats %in% colnames(t2)[i])
-##     fch1 <- ymd("20180901")
-##     for (j in 1:length(sel.r)){
-##         #j <- 1 # debug
-##         fch2 <- cm.s$fch[sel.r[j]]
-##         if (cm.s$out.id[sel.r[j]]=="start") {
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
-##         } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
-##             in1 <- cm.s$out.id[sel.r[j]]
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
-##         } else {
-##             in1 <- cm.s$out.id[sel.r[j]]
-##             t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
-##         }
-##         fch1 <- fch2 ## prep next loop
-##     }
-## }
-## ##
-## ## add junta totals
-## t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
-## for (i in 1:ncol(t3)){
-##     t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
-## }
-## t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
-## t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
-## t2[is.na(t2)] <- 0
-## ##
-## ## ## keep session days only
-## ## t2 <- t2[which(t2$fch %in% session.days),]
-## ## duplicate with names instead of ids
-## t2.n <- t2
-## for (i in 1:ncol(t2.n)){
-##     t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
-## }
-## ##
-## ## export
-## write.csv(t2  [,-1], file = paste0(dd, "com-by-com/pesca64ids.csv"), row.names=FALSE)
-## write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/pesca64nom.csv"), row.names=FALSE)
+####################
+## frontera norte ##
+####################
+tmp.work <- "asuntos frontera norte"
+table(unique(cm$n[grep(tmp.work, cm$committee)]))
+##
+names <- unique(cm$seats[cm$committee==tmp.work])
+t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
+colnames(t2) <- names
+t2 <- cbind(t, t2)
+## subset comm data
+cm.s <- cm[cm$committee==tmp.work,]
+##
+for (i in 3:ncol(t2)){
+    #i <- 3 # debug
+    sel.r <- which(cm.s$seats %in% colnames(t2)[i])
+    fch1 <- ymd("20180901")
+    for (j in 1:length(sel.r)){
+        #j <- 1 # debug
+        fch2 <- cm.s$fch[sel.r[j]]
+        if (cm.s$out.id[sel.r[j]]=="start") {
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
+        } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        } else {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        }
+        fch1 <- fch2 ## prep next loop
+    }
+}
+##
+## add junta totals
+t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
+for (i in 1:ncol(t3)){
+    t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
+}
+t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
+t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
+t2[is.na(t2)] <- 0
+##
+## ## keep session days only
+## t2 <- t2[which(t2$fch %in% session.days),]
+## duplicate with names instead of ids
+t2.n <- t2
+for (i in 1:ncol(t2.n)){
+    t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
+}
+##
+## export
+write.csv(t2  [,-1], file = paste0(dd, "com-by-com/norte64ids.csv"), row.names=FALSE)
+write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/norte64nom.csv"), row.names=FALSE)
+
+
+##################
+## frontera sur ##
+##################
+tmp.work <- "asuntos frontera sur"
+table(unique(cm$n[grep(tmp.work, cm$committee)]))
+##
+names <- unique(cm$seats[cm$committee==tmp.work])
+t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
+colnames(t2) <- names
+t2 <- cbind(t, t2)
+## subset comm data
+cm.s <- cm[cm$committee==tmp.work,]
+##
+for (i in 3:ncol(t2)){
+    #i <- 3 # debug
+    sel.r <- which(cm.s$seats %in% colnames(t2)[i])
+    fch1 <- ymd("20180901")
+    for (j in 1:length(sel.r)){
+        #j <- 1 # debug
+        fch2 <- cm.s$fch[sel.r[j]]
+        if (cm.s$out.id[sel.r[j]]=="start") {
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
+        } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        } else {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        }
+        fch1 <- fch2 ## prep next loop
+    }
+}
+## add junta totals
+t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
+for (i in 1:ncol(t3)){
+    t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
+}
+t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
+t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
+t2[is.na(t2)] <- 0
+##
+## ## keep session days only
+## t2 <- t2[which(t2$fch %in% session.days),]
+## duplicate with names instead of ids
+t2.n <- t2
+for (i in 1:ncol(t2.n)){
+    t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
+}
+##
+##
+## export
+write.csv(t2  [,-1], file = paste0(dd, "com-by-com/sur64ids.csv"), row.names=FALSE)
+write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/sur64nom.csv"), row.names=FALSE)
+
+###############
+## migración ##
+###############
+tmp.work <- "asuntos migratorios"
+table(unique(cm$n[grep(tmp.work, cm$committee)]))
+##
+names <- unique(cm$seats[cm$committee==tmp.work])
+t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
+colnames(t2) <- names
+t2 <- cbind(t, t2)
+## subset comm data
+cm.s <- cm[cm$committee==tmp.work,]
+##
+for (i in 3:ncol(t2)){
+    #i <- 3 # debug
+    sel.r <- which(cm.s$seats %in% colnames(t2)[i])
+    fch1 <- ymd("20180901")
+    for (j in 1:length(sel.r)){
+        #j <- 1 # debug
+        fch2 <- cm.s$fch[sel.r[j]]
+        if (cm.s$out.id[sel.r[j]]=="start") {
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
+        } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        } else {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        }
+        fch1 <- fch2 ## prep next loop
+    }
+}
+## add junta totals
+t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
+for (i in 1:ncol(t3)){
+    t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
+}
+t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
+t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
+t2[is.na(t2)] <- 0
+##
+## ## keep session days only
+## t2 <- t2[which(t2$fch %in% session.days),]
+## duplicate with names instead of ids
+t2.n <- t2
+for (i in 1:ncol(t2.n)){
+    t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
+}
+##
+##
+## export
+write.csv(t2  [,-1], file = paste0(dd, "com-by-com/migracion64ids.csv"), row.names=FALSE)
+write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/migracion64nom.csv"), row.names=FALSE)
+ 
+####################
+## comunicaciones ##
+####################
+tmp.work <- "comunicaciones y transportes"
+table(unique(cm$n[grep(tmp.work, cm$committee)]))
+##
+names <- unique(cm$seats[cm$committee==tmp.work])
+t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
+colnames(t2) <- names
+t2 <- cbind(t, t2)
+## subset comm data
+cm.s <- cm[cm$committee==tmp.work,]
+cm.s[1,]
+##
+for (i in 3:ncol(t2)){
+    #i <- 3 # debug
+    sel.r <- which(cm.s$seats %in% colnames(t2)[i])
+    fch1 <- ymd("20180901")
+    for (j in 1:length(sel.r)){
+        #j <- 1 # debug
+        fch2 <- cm.s$fch[sel.r[j]]
+        if (cm.s$out.id[sel.r[j]]=="start") {
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
+        } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        } else {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        }
+        fch1 <- fch2 ## prep next loop
+    }
+}
+##
+## add junta totals
+t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
+for (i in 1:ncol(t3)){
+    t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
+}
+t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
+t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
+t2[is.na(t2)] <- 0
+##
+## ## keep session days only
+## t2 <- t2[which(t2$fch %in% session.days),]
+## duplicate with names instead of ids
+t2.n <- t2
+for (i in 1:ncol(t2.n)){
+    t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
+}
+##
+## export
+write.csv(t2  [,-1], file = paste0(dd, "com-by-com/comunicaciones64ids.csv"), row.names=FALSE)
+write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/comunicaciones64nom.csv"), row.names=FALSE)
+
+#######################
+## economia comercio ##
+#######################
+tmp.work <- "economia comercio y competitividad"
+table(unique(cm$n[grep(tmp.work, cm$committee)]))
+##
+names <- unique(cm$seats[cm$committee==tmp.work])
+t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
+colnames(t2) <- names
+t2 <- cbind(t, t2)
+## subset comm data
+cm.s <- cm[cm$committee==tmp.work,]
+##
+for (i in 3:ncol(t2)){
+    #i <- 3 # debug
+    sel.r <- which(cm.s$seats %in% colnames(t2)[i])
+    fch1 <- ymd("20180901")
+    for (j in 1:length(sel.r)){
+        #j <- 1 # debug
+        fch2 <- cm.s$fch[sel.r[j]]
+        if (cm.s$out.id[sel.r[j]]=="start") {
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
+        } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        } else {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        }
+        fch1 <- fch2 ## prep next loop
+    }
+}
+##
+## add junta totals
+t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
+for (i in 1:ncol(t3)){
+    t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
+}
+t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
+t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
+t2[is.na(t2)] <- 0
+##
+## ## keep session days only
+## t2 <- t2[which(t2$fch %in% session.days),]
+## duplicate with names instead of ids
+t2.n <- t2
+for (i in 1:ncol(t2.n)){
+    t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
+}
+##
+## export
+write.csv(t2  [,-1], file = paste0(dd, "com-by-com/ecocom64ids.csv"), row.names=FALSE)
+write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/ecocom64nom.csv"), row.names=FALSE)
+
+###########
+## pesca ##
+###########
+tmp.work <- "pesca"
+table(unique(cm$n[grep(tmp.work, cm$committee)]))
+##
+names <- unique(cm$seats[cm$committee==tmp.work])
+t2 <- matrix(tmp.t, nrow=nrow(t), ncol=length(names))  # duplicate
+colnames(t2) <- names
+t2 <- cbind(t, t2)
+## subset comm data
+cm.s <- cm[cm$committee==tmp.work,]
+cm.s[1,]
+##
+for (i in 3:ncol(t2)){
+    #i <- 3 # debug
+    sel.r <- which(cm.s$seats %in% colnames(t2)[i])
+    fch1 <- ymd("20180901")
+    for (j in 1:length(sel.r)){
+        #j <- 1 # debug
+        fch2 <- cm.s$fch[sel.r[j]]
+        if (cm.s$out.id[sel.r[j]]=="start") {
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- "vac" ## fill initial vacancy
+        } else if (cm.s$in.id [sel.r[j]]=="end"  ) {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        } else {
+            in1 <- cm.s$out.id[sel.r[j]]
+            t2[which(t2$fch %within% interval(fch1,fch2)),i] <- in1 ## fill member's id
+        }
+        fch1 <- fch2 ## prep next loop
+    }
+}
+##
+## add junta totals
+t3 <- t2[, grep(pattern="^pr|^se", x=colnames(t2))]
+for (i in 1:ncol(t3)){
+    t3[,i] <- ifelse(t3[,i]=="vac", 0, 1)
+}
+t2$junta.mrn <- round(rowSums(t3[,grep(pattern="mrn$",                x=colnames(t3))]) / rowSums(t3),2)
+t2$junta.jhh <- round(rowSums(t3[,grep(pattern="mrn$|pt$|pvem$|pes$", x=colnames(t3))]) / rowSums(t3),2)
+t2[is.na(t2)] <- 0
+##
+## ## keep session days only
+## t2 <- t2[which(t2$fch %in% session.days),]
+## duplicate with names instead of ids
+t2.n <- t2
+for (i in 1:ncol(t2.n)){
+    t2.n[,i] <- mapvalues(t2.n[,i], from = dp$id, to = dp$short, warn_missing = FALSE)
+}
+##
+## export
+write.csv(t2  [,-1], file = paste0(dd, "com-by-com/pesca64ids.csv"), row.names=FALSE)
+write.csv(t2.n[,-1], file = paste0(dd, "com-by-com/pesca64nom.csv"), row.names=FALSE)
 
 #################
 ## presupuesto ##
